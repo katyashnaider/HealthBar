@@ -12,12 +12,12 @@ public class HealthBar : MonoBehaviour
 
     private void OnEnable()
     {
-        _player.ChangedHealth += SetHealth;
+        _player.ChangedHealth += OnHealthChanged;
     }
 
     private void OnDisable()
     {
-        _player.ChangedHealth -= SetHealth;
+        _player.ChangedHealth -= OnHealthChanged;
     }
 
     private IEnumerator ChangeSlider(float targetHealth)
@@ -31,7 +31,7 @@ public class HealthBar : MonoBehaviour
         }
     }
 
-    private void SetHealth(float health)
+    private void OnHealthChanged(float health)
     {
         if (_coroutine != null)
         {

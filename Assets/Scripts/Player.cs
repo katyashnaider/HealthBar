@@ -3,10 +3,9 @@ using System;
 
 public class Player : MonoBehaviour
 {
-    [SerializeField] private HealthBar _healthBar;
-
     private float _maxHealth = 100;
     private float _minHealth = 0;
+
     private float _currentHealth;
 
     public event Action<float> ChangedHealth;
@@ -15,29 +14,26 @@ public class Player : MonoBehaviour
 
     private void Start()
     {
-        _currentHealth = _maxHealth;
+        CurrentHealth = _maxHealth;
     }
-   
+
     public void TakeDamage(float damage)
     {
-        _currentHealth -= damage;
-        _currentHealth = CheckingValue();
+        CurrentHealth -= damage;
         
-        ChangedHealth?.Invoke(_currentHealth);
+        ChangedHealth?.Invoke(CurrentHealth);
     }
 
     public void Heal(float heal)
     {
-        _currentHealth += heal;
-        _currentHealth = CheckingValue();
+        CurrentHealth += heal;
 
-        ChangedHealth?.Invoke(_currentHealth);
+        ChangedHealth?.Invoke(CurrentHealth);
     }
 
-    private float CheckingValue()
+    private float CurrentHealth
     {
-        _currentHealth = Mathf.Clamp(_currentHealth, _minHealth, _maxHealth);
-
-        return _currentHealth;
-    }
+        get { return _currentHealth; }
+        set { _currentHealth = Mathf.Clamp(value, _minHealth, _maxHealth); }
+    } 
 }
